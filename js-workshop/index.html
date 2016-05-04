@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>JavaScript</title>
+
+		<meta name="description" content="">
+		<meta name="author" content="David Arias">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Welcome to the JavaScript workshop :)</h1>
+				</section>
+
+                <section>
+					<h2>What is JavaScript?</h2>
+                    <ul>
+                        <li>It is a programming language ( very diferent from Java! )</li>
+                        <li>It is used mainly in web applications</li>
+                    </ul>
+				</section>
+
+                <section>
+					<h2>My first  JavaScript code</h2>
+                    <p>Copy this in the head section of your page</p>
+                    <pre><code class="hljs">
+&lt;script&gt;
+alert("Hola mundo");
+&lt;/script&gt;
+                    </code></pre>
+
+				</section>
+
+                <section>
+					<h2>Programming with JavaScript</h2>
+                    <p>Open your web browser dev tools and go the the console tab</p>
+                    <ul>
+                        <li>In the console you can type JS code</li>
+                        <li>The console will execute your code immediately</li>
+                    </ul>
+				</section>
+                <section>
+
+                      
+					<h2>The JS Console</h2>
+                    <p>We can do math:</p>
+                    <pre><code class="hljs">
+ 2+2
+ 4
+ 
+ 2+2*5
+ 12
+                    </code></pre>
+                    
+                </section>
+
+                <section>
+	                <h2>Variables</h2>
+                    <p>Variables are boxes that can have a value inside</p>
+
+                    <pre><code class="hljs">
+
+var myAge = 10;
+var myAddition = 2 + 2;
+var myName = "David";
+var number = myAge + myAddition; // number = 14
+                    </code></pre>
+                </section>
+                <section>
+
+	                <h2>Fuctions</h2>
+                    <p>a function is a group of commands that performs some useful task </p>
+
+                    <pre><code class="hljs">
+// we are calling the function alert, in other words
+// we are commanding to the browser to execute
+// the alert function
+alert("Hola");
+                    </code></pre>
+                </section>
+                                    
+                <section>
+                    <h2>Functions 2</h2>
+                    <p>How to define functions </p>
+
+                    <pre><code class="hljs">
+
+function decirHola(){
+    alert("hello");                        
+}
+
+function addTwoNumbers( a, b ){
+    return a + b;
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+                    <p>Create a function that return the double of a provided number</p>
+                </section>
+
+                <section>
+                    <h3>Data types</h3>
+                                        <pre><code class="hljs">
+
+var somethingTrue = true;
+var somethingFalse = false;
+
+var number = 2.4;
+var text = "a text";
+var list = [ 1, 2, 5, "text"];
+var object = {
+    numberInsideObject: 3,
+    textInsideObject: "text"
+};
+                                        </code></pre>
+                </section>
+
+                <section>
+                    <h3>Get values from a list</h3>
+                    <pre><code class="hljs">
+
+var list = [ 1, 2, 5, "text!"];
+alert( list[ 0 ] ); // first element of a list 
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Get values from an object</h3>
+                    <pre><code class="hljs">
+var object = {
+    numberInsideObject: 3,
+    textInsideObject: "text"
+};
+alert( object.numberInsideObject );
+                    </code></pre>
+                </section>
+                
+                <section>
+                    <h3>Exercise</h3>
+                    <p>Create a list of your favourites music groups</p>
+                    <p>Create a function that gets your favourite music band</p>
+                </section>
+
+                <section>
+                    <h3>Introduction to jQuery</h3>
+                    <ul>
+                        <li>jQuery is a JS library</li>
+                        <li>A library is a group of functions that helps us to do some task</li>
+                        <li>jQuery will help us to interact with the web page</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Adding the jQuery library to your web page</h3>
+                    <pre><code class="hljs">
+&lt;script src="https://code.jquery.com/jquery-2.2.2.min.js"&gt;
+&lt;/script&gt;
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>jQuery Selectors</h3>
+                    <p>Similar to css selectors</p>
+                    <pre><code class="hljs">
+// this function gets all the paragraphs in the web page
+$( "p" );
+// this gets all the elements with the class warning
+$( ".warning" );
+// this gets the element with the unique indentifier title
+$( "#title" );
+
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Some HTML interaction</h3>
+                    <pre><code class="hljs">
+// hide all the paragraphs in the page
+$( "p" ).hide();
+// show all the elements with warning class if hidden
+$( ".warning" ).show() ;
+// change the value of the element with id title
+$( "#title" ).html("my new title");
+
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h3>Events</h3>
+                    <p>When a user interact with the web page, a event is fired. We can catch the event and execute some action</p>
+                    <pre><code class="hljs">
+// function that sets a background of an element to red
+function turnRed(){
+    $(this).css("background", "red");
+}
+
+// when the user click on the element with id myelement
+// the turnRed function is called, and the element background
+// is chaged to red
+$( "#myelement" ).on("click", turnRed);
+
+
+                    </code></pre>
+
+                    <p>Magic!</p>
+
+                </section>
+
+                <section>
+                    <h3>Exercise</h3>
+                    <ul>
+                        <li>Create a button that change the background color of an element</li>
+                        <li>Create a button that restore the background color</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Conditionals</h3>
+                    <p>Try this code in the console:</p>
+                    <pre><code class="hljs">
+2 == 2;
+2 == 3;
+3 &gt; 2;
+2 &gt; 3;
+
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Control structures: IF</h3>
+                    <p>Ejecute some actions if the condition is true</p>
+                    <pre><code class="hljs">
+var myAge = 10;
+if ( myAge  &gt; 10 ){
+    alert("I have more than 10 years!");
+}else{
+    alert("I have less than 10 years");
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h3>Check if an element is visible with jQuery</h3>
+                    <pre><code class="hljs">
+if( $('.mylement').is(":visible") ){
+    alert('visible');
+}else{
+    alert('not visible');
+}
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Exercises</h3>
+                    <ul>
+                        <li>Create an element that disappear if you click on it</li>
+                        <li>Create a button that make an element appear of disappear.</li>
+                    </ul>
+                </section>
+                
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

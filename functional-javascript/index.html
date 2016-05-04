@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Functional JavaScript Workshop</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <h1>Welcome to the functional JavaScript Workshop :)</h1>
+                </section>
+                <!-- 
+                     Learn the basic concepts of functional programming;
+                     Immutability and avoiding side-effects;
+                     Pure functions;
+                     High-order functions;
+                     Lambdas / closures;
+                     Composition of functions;
+                     curry
+                     Learn why functional programming matters;
+                     Learn how to effectively use functional programming in JavaScript;
+                     Make better applications and avoid unexpected bugs.
+                  -->
+                
+                <section>
+                    <h2>JavaScript has a functional core</h2>
+                    <p>Although is hidden somehow</p>
+                </section>
+
+                <section>
+                    <h2>functions are also values!</h2>
+                    <pre><code class="hljs" data-trim>
+var myFunction = function(){
+    // do something
+};
+// function values behave like other objects
+myFunction.call();
+					</code></pre>
+                </section>
+
+                <section>
+                    <h2>Function values can be passed around</h2>
+                    <p>This is also called "High order functions"</p>
+                    <pre><code class="hljs" data-trim>
+var myFunction = function( aFunctionParameter ){
+    // call the funcion we recibed
+    aFunctionParameter();
+
+    // return a function that does nothing
+    // probably not so usefull... :)
+    return function(){};
+};
+					</code></pre>
+                </section>
+
+                <section>
+                    <h2>Introducing the Ramda library</h2>
+                    <p>Ramda is a library similar to underscore but focused on providing functional utilities</p>
+                    <p><a href="http://ramdajs.com">Ramda</a></p>
+                </section>
+
+                <section>
+                    <h2>A very simple example</h2>
+                    <pre><code class="hljs" data-trim>
+var numbers = [ 0, 1, 3];
+var double = function( x ){
+    return x * 2;
+}
+var doubledList = R.map( double, numbers );
+// [ 0, 2, 6 ]
+                    </code></pre>
+                </section>
+                
+                <section>
+                    <h2>Partial application</h2>
+                    <p>Takes a function f and a list of arguments, and returns a function g. When applied, g returns the result of applying f to the arguments provided initially followed by the arguments provided to g.</p>
+                    <pre><code class="hljs" data-trim>
+                            
+var multiply = (a, b) => a * b; //ES6 syntax!!
+var double = R.partial(multiply, [2]);
+double(2); //=> 4
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Currying</h2>
+                    <p>Kind of automatic partial application</p>
+                    <p>All Ramda functions are curried</p>
+                    <pre><code class="hljs" data-trim>
+function add (a, b) {
+  return a + b;
+}
+add(3, 4); // returns 7
+function add (a) { //curried add function
+  return function (b) {
+    return a + b;
+  }
+}
+var add3 = add(3); // returns a function that adds 3 to a number
+add3(4); // returns 7
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Function composition</h2>
+                    <pre><code class="hljs" data-trim>
+var f = R.compose(R.inc, R.negate, Math.pow);
+
+f(3, 4); // -(3^4) + 1 // R.inc( R.negate( Math.pow( 3, 4 ) ) );
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Another very simple example</h2>
+                    <pre><code class="hljs" data-trim>
+var users = [
+    {name: "David", age: 30},
+    {name: "John", age: 25 },
+    {name: "Edward", age: 29}
+];
+
+function isUserAgeLessThan27( user ){
+    return (user.age < 27); 
+}
+
+var usersLessThan = R.filter( isUserAgeLessThan, users );
+// [ {name: "John", age: 25 } ]
+                      </code></pre>
+                </section>
+
+                <section>
+                    <h2>Another very simple example (2)</h2>
+                    <pre><code class="hljs" data-trim>
+var users = [
+    {name: "David", age: 30},
+    {name: "John", age: 25 },
+    {name: "Edward", age: 29}
+];
+
+var isUserAgeLessThan27 = R.compose( R.lt( 27 ), R.prop( 'age') )
+var filterUsersLess27Years = R.filter( isUserAgeLessThan )
+var filteredUsers = filterUsersLess27Years( users );
+
+// [ {name: "John", age: 25 } ]
+                      </code></pre>
+                </section>
+
+                <section>
+                    <h2>Exercise: create a fucntion that sorts a list of users by age using ramda</h2>
+                </section>
+
+                <section>
+                    <h2>Immutability</h2>
+                    <p>In Javascript the objects and arrays are mutables, sometimes that leads to bugs</p>
+                    <pre><code class="hljs" data-trim>
+
+function withSideEffects( anArray ){
+    anArray[0] = 3;
+    return anArray;
+}
+
+function withOUTSideEffects( anArray ){
+    var copy = R.clone( anArray );
+    copy[0] = 3;
+    return copy;
+}
+                      </code></pre>
+                </section>
+
+                <section>
+                    <h2>Pure functions</h2>
+                    <p>Functions that do not cause side effects</p>
+                    <p>A function that return always the same value if feed with the same arguments</p>
+                    <pre><code class="hljs" data-trim>
+//pure function
+function add(a,b){
+    return a+b;
+}
+
+//non-pure function
+function rand(){
+    return Math.random();
+}
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Mini-project: Create a poker probability calculator</h2>
+                    <p>Some hints</p>
+                    <ul>
+                        <li>Create a function that returns the starting deck</li>
+                        <li>Create a function that takes one specific card of the deck</li>
+                        <li>Create a function that calculate the probability of taking a suit from the deck</li>
+                        <li>Create a function that calculate the probability of taking a number from the deck</li>
+                        <li>Create a function that calculate the probability of taking a card from the deck</li>
+                        <li>Optional: make an easy user interface</li>
+                    </ul>
+                </section>
+                
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
