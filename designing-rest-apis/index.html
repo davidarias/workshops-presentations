@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Design and implementation of RESTful APIs</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+                <section>
+                    <h1>Design and implementation of RESTful APIs</h1>
+                </section>
+
+                <section>
+                    <h2>REST</h2>
+                    <p>REpresentational State Transfer</p>
+                    <ul>
+                        <li>Client–server</li>
+                        <li>Stateless ( no client context ). Implies cacheable</li>
+                        <li>Uniform interface</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>REST Applied to Web Services I</h2>
+                    <ul>
+                        <li>Use unique URI for each resource</li>
+                        <li>Use Standard HTTP methods to perform actions on resources</li>
+                        <li>Use JSON data format ( also XML )</li>
+                        <li>Authentication and authorization via tokens</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>REST Applied to Web Services II</h2>
+                    <p>Endpoint: http://api.example.com/resource/ </p>
+                    <ul>
+                        <li>GET: List all resources</li>
+                        <li>PUT: Replace all resources</li>
+                        <li>POST: Create a new resource</li>
+                        <li>DELETE: Delete all resources</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>REST Applied to Web Services III</h2>
+                    <p>Endpoint: http://api.example.com/resource/{resource-ID} </p>
+                    <ul>
+                        <li>GET: Get the resource specified by resource-ID</li>
+                        <li>PUT: Replace the resource specified by resource-ID</li>
+                        <li>POST: Not used ( generally ), it can be the same as PUT or create a new resource</li>
+                        <li>DELETE: Delete the resource specified by resource-ID</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>REST Applied to Web Services III</h2>
+                    <p>Use HTTP codes. Success codes:</p>
+                    <ul>
+                        <li>200 OK: successfully get a resource or resource list</li>
+                        <li>204 No Content: successfully processed the request and is not returning any content</li>
+                        <li>201 Created: successfully created a new resource </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>REST Applied to Web Services IV</h2>
+                    <p>Use HTTP codes. Errors:</p>
+                    <ul>
+                        <li>400 Bad Request: Client Error ( eg. malformed request, invalid JSON...)</li>
+                        <li>401 Unauthorized: Requested access to a restricted resource witout credentials</li>
+                        <li>403 Forbidden: The credentials are valid, but the user does not have permission </li>
+                        <li>405 Method Not Allowed: e.g. POST in a read-only resource </li>
+                        <li>500 Internal Server Error. Something went wrong in the server </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>REST Applied to Web Services V</h2>
+                    <p>Authentication via tokens: Add a get parameter in the request</p>
+                    <p>https://api.example.com/resource/?token={my-token}</p>
+                    <ul>
+                        <li>You should ALWAYS use HTTPS ( note de 'S' )</li>
+                        <li>Tokens should be difficult to guess </li>
+                        <li>Usally a 32-characters random string is ok </li>
+                        <li>E.g. A67F8189A9592C2A9EE9D35A77ECCD8F</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>A simple example:</h2>
+
+                    <pre><code class="hljs" data-trim>
+GET https://api.example.com/user/?token=ac2342df6a7e8f8c9b&limit=2
+					</code></pre>
+
+                    <pre><code class="hljs" data-trim>
+{
+    "meta": {
+        "count": 10,
+        "limit": 2,
+        "offset": 0
+    },
+    "objects": [{
+           "name": "David",
+           "score": 100
+       },{
+           "name": "John",
+           "score": 488
+       },
+    ]
+}
+
+
+
+					</code></pre>
+                    <p>(Note the pagination)</p>
+                </section>
+                            
+                <section>
+                    <h2>Related Resources</h2>
+
+                    <pre><code class="hljs" data-trim>
+GET https://api.example.com/user/1/?token=ac2342df6a7e8f8c9b
+					</code></pre>
+
+                    <pre><code class="hljs" data-trim>
+{
+    "id": 1,
+    "name": "David",
+    "score": 100,
+    "deparment": "/deparment/5/",
+    "resource_uri": "/user/1/"
+}
+
+					</code></pre>
+                    <p>Use the resource URI of the related resource (or just IDs)</p>
+                </section>
+
+                <section>
+                    <h2>Usability for APIs</h2>
+                    <p>UX does not only applies to GUIs, also applies to APIs</p>
+                    <ul>
+                        <li>Be consistent.</li>
+                        <li>Use well-known standards. The world moves with conventions.</li>
+                        <li>Treat special cases like special cases. Some problems do not fit well in the REST convencions. Don't use REST.</li>
+                        <li>Use meaningful names.</li>
+                        <li>Think about the user needs, mirroring your DB structure is not always useful.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Mini-project</h2>
+
+                    <p>Create a RESTful API usign Bottle.py for managing a card collection for each user</p>
+
+                </section>
+                
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
